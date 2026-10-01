@@ -16,6 +16,14 @@ The normal Hugging Face download path remains available when an override is not
 set.  `realtime_seedvc.py` validates both paths and enables offline mode before
 loading Seed-VC.
 
+## ROCm audio output compatibility
+
+On the validated ComfyUI ROCm/PyTorch environment, `inference.py` writes the
+final mono waveform through `soundfile` as a PCM-16 WAV instead of calling
+`torchaudio.save`.  This avoids audio backend and version compatibility issues
+while preserving the original output filename and sample rate.  This path was
+validated by generating and listening to the converted audio.
+
 ## Pseudo-real-time test
 
 `realtime_seedvc.py` keeps the tiny model and reference-speaker features in

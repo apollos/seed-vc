@@ -18,6 +18,7 @@ from modules.commons import *
 import time
 
 import torchaudio
+import soundfile as sf
 import librosa
 from modules.commons import str2bool
 
@@ -404,7 +405,12 @@ def main(args):
     source_name = os.path.basename(source).split(".")[0]
     target_name = os.path.basename(target_name).split(".")[0]
     os.makedirs(args.output, exist_ok=True)
-    torchaudio.save(os.path.join(args.output, f"vc_{source_name}_{target_name}_{length_adjust}_{diffusion_steps}_{inference_cfg_rate}.wav"), vc_wave.cpu(), sr)
+    sf.write(
+        os.path.join(args.output, f"vc_{source_name}_{target_name}_{length_adjust}_{diffusion_steps}_{inference_cfg_rate}.wav"),
+        vc_wave[0].detach().cpu().numpy(),
+        sr,
+        subtype="PCM_16",
+    )
 
 
 if __name__ == "__main__":

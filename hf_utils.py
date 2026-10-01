@@ -15,7 +15,7 @@ def _model_file(repo_id, filename):
     if env_name and env_name in os.environ:
         path = Path(os.environ[env_name]).expanduser()
         if not path.is_file():
-            raise FileNotFoundError(f"{env_name} points to a missing file: {path}")
+            raise FileNotFoundError(f"{env_name} 指向的文件不存在：{path}")
         return str(path)
 
     os.makedirs("./checkpoints", exist_ok=True)
